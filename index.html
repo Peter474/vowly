@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vowly — Digital Wedding Invitations</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════
+   VOWLY — Landing Page
+   Navy · Gold · Luxury
+═══════════════════════════════════ */
+:root{
+  --navy:    #0e1e35;
+  --navy2:   #162844;
+  --navy3:   #1c3358;
+  --gold:    #c9a84c;
+  --gold2:   #e2c47a;
+  --gold3:   #f0d9a0;
+  --gold-dim:rgba(201,168,76,.18);
+  --white:   #ffffff;
+  --offwhite:#f8f4ee;
+  --muted:   rgba(248,244,238,.45);
+  --ff-title:'Cinzel', serif;
+  --ff-body: 'Cormorant Garamond', serif;
+  --ff-sans: 'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--ff-sans);
+  background:var(--navy);
+  color:var(--offwhite);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+
+/* ── canvas stars ── */
+#starCanvas{
+  position:fixed;inset:0;
+  pointer-events:none;z-index:0;
+  opacity:.6;
+}
+
+/* ── noise overlay ── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.5;
+}
+
+/* ════════════════════
+   HERO
+════════════════════ */
+#hero{
+  position:relative;z-index:1;
+  min-height:100svh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:6rem 1.5rem 4rem;
+  overflow:hidden;
+}
+
+/* radial glow behind logo */
+#hero::before{
+  content:'';
+  position:absolute;top:50%;left:50%;
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(201,168,76,.1) 0%,transparent 65%);
+  transform:translate(-50%,-50%);
+  animation:glowPulse 5s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes glowPulse{
+  from{opacity:.5;transform:translate(-50%,-50%) scale(1)}
+  to{opacity:1;transform:translate(-50%,-50%) scale(1.2)}
+}
+
+/* diagonal gold lines decoration */
+#hero::after{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    linear-gradient(135deg, transparent 49.5%, rgba(201,168,76,.04) 49.5%, rgba(201,168,76,.04) 50.5%, transparent 50.5%),
+    linear-gradient(45deg,  transparent 49.5%, rgba(201,168,76,.04) 49.5%, rgba(201,168,76,.04) 50.5%, transparent 50.5%);
+  background-size:120px 120px;
+  pointer-events:none;
+  opacity:.6;
+}
+
+/* ── LOGO ── */
+.logo-wrap{
+  position:relative;
+  margin-bottom:2rem;
+  animation:logoReveal 1.2s cubic-bezier(.22,1,.36,1) both;
+}
+.logo-img{
+  width:clamp(160px,35vw,260px);
+  height:auto;
+  filter:drop-shadow(0 0 30px rgba(201,168,76,.35));
+  animation:logoFloat 5s ease-in-out infinite;
+}
+@keyframes logoFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+@keyframes logoReveal{
+  from{opacity:0;transform:scale(.85) translateY(20px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+
+/* ── BRAND NAME ── */
+.brand-name{
+  font-family:var(--ff-title);
+  font-size:clamp(3rem,10vw,6rem);
+  font-weight:700;
+  letter-spacing:.25em;
+  background:linear-gradient(135deg, var(--gold) 0%, var(--gold3) 50%, var(--gold) 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:logoReveal 1.2s .2s cubic-bezier(.22,1,.36,1) both,
+            shimmerText 4s 2s linear infinite;
+}
+@keyframes shimmerText{
+  0%{background-position:0% center}
+  100%{background-position:200% center}
+}
+
+.brand-sub{
+  font-family:var(--ff-title);
+  font-size:clamp(.6rem,2vw,.8rem);
+  letter-spacing:.4em;
+  color:var(--gold);
+  opacity:.7;
+  margin-top:.5rem;
+  animation:fadeUp .9s .4s both;
+}
+
+/* ── DIVIDER ── */
+.gold-divider{
+  display:flex;align-items:center;gap:1rem;
+  justify-content:center;
+  margin:2rem 0;
+  animation:fadeUp .9s .5s both;
+}
+.gold-divider::before,.gold-divider::after{
+  content:'';flex:1;max-width:120px;height:1px;
+}
+.gold-divider::before{background:linear-gradient(90deg,transparent,var(--gold))}
+.gold-divider::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.divider-gem{
+  color:var(--gold);font-size:.9rem;
+  animation:gemSpin 6s linear infinite;
+}
+@keyframes gemSpin{
+  0%,100%{transform:rotate(0deg) scale(1)}
+  50%{transform:rotate(180deg) scale(1.2)}
+}
+
+/* ── TAGLINE ── */
+.tagline{
+  font-family:var(--ff-body);
+  font-style:italic;
+  font-size:clamp(1.1rem,3.5vw,1.7rem);
+  font-weight:300;
+  color:var(--muted);
+  max-width:480px;
+  line-height:1.7;
+  animation:fadeUp .9s .6s both;
+}
+
+/* ── TIKTOK CTA ── */
+.tiktok-btn{
+  display:inline-flex;align-items:center;gap:.85rem;
+  margin-top:2.5rem;
+  padding:1rem 2.4rem;
+  background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.08));
+  border:1px solid var(--gold);
+  border-radius:50px;
+  color:var(--gold2);
+  font-family:var(--ff-title);
+  font-size:clamp(.75rem,2vw,.9rem);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  transition:all .35s cubic-bezier(.22,1,.36,1);
+  animation:fadeUp .9s .8s both;
+  position:relative;overflow:hidden;
+}
+.tiktok-btn::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,.25),transparent);
+  opacity:0;transition:opacity .35s;
+}
+.tiktok-btn:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 12px 40px rgba(201,168,76,.25),0 0 0 1px rgba(201,168,76,.4);
+  color:var(--gold3);
+}
+.tiktok-btn:hover::before{opacity:1}
+
+/* TikTok SVG icon */
+.tt-icon{
+  width:22px;height:22px;flex-shrink:0;
+  fill:var(--gold2);
+  transition:fill .3s;
+}
+.tiktok-btn:hover .tt-icon{fill:var(--gold3)}
+
+/* ── SCROLL HINT ── */
+.scroll-hint{
+  position:absolute;bottom:2rem;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  color:rgba(201,168,76,.35);
+  font-size:.6rem;letter-spacing:3px;text-transform:uppercase;
+  animation:fadeUp .9s 1.2s both, scrollBounce 2.5s 2.5s ease-in-out infinite;
+}
+.scroll-arr{
+  width:14px;height:14px;
+  border-right:1px solid rgba(201,168,76,.35);
+  border-bottom:1px solid rgba(201,168,76,.35);
+  transform:rotate(45deg);
+}
+@keyframes scrollBounce{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(8px)}
+}
+
+/* ════════════════════
+   FEATURES SECTION
+════════════════════ */
+#features{
+  position:relative;z-index:1;
+  padding:6rem 1.5rem;
+  background:linear-gradient(180deg,transparent,rgba(22,40,68,.8),transparent);
+}
+.features-inner{max-width:960px;margin:0 auto;text-align:center}
+
+.sec-eyebrow{
+  font-family:var(--ff-title);
+  font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:.8rem;
+}
+.sec-title{
+  font-family:var(--ff-body);
+  font-size:clamp(2rem,6vw,3.2rem);
+  font-weight:300;font-style:italic;
+  color:var(--offwhite);line-height:1.2;
+  margin-bottom:1rem;
+}
+.sec-divider{
+  width:50px;height:1px;
+  background:var(--gold);
+  margin:1.5rem auto 3rem;
+}
+
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.5rem;
+  margin-top:2rem;
+}
+.feat-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(201,168,76,.15);
+  border-radius:18px;
+  padding:2rem 1.5rem;
+  text-align:center;
+  transition:transform .35s,border-color .35s,background .35s;
+  position:relative;overflow:hidden;
+}
+.feat-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity .35s;
+}
+.feat-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(201,168,76,.4);
+  background:rgba(201,168,76,.06);
+}
+.feat-card:hover::before{opacity:1}
+.feat-icon{font-size:2.2rem;margin-bottom:1rem;display:block}
+.feat-title{
+  font-family:var(--ff-title);
+  font-size:.9rem;letter-spacing:.1em;
+  color:var(--gold2);margin-bottom:.6rem;
+}
+.feat-desc{
+  font-size:.85rem;color:var(--muted);line-height:1.7;font-weight:200;
+}
+
+/* ════════════════════
+   WATERMARK
+════════════════════ */
+.watermark{
+  position:fixed;
+  bottom:1.2rem;right:1.2rem;
+  z-index:100;
+  display:flex;align-items:center;gap:.6rem;
+  background:rgba(14,30,53,.75);
+  border:1px solid rgba(201,168,76,.2);
+  border-radius:50px;
+  padding:.45rem .9rem .45rem .6rem;
+  backdrop-filter:blur(10px);
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+  transition:transform .3s,box-shadow .3s;
+}
+.watermark:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(201,168,76,.15);
+}
+.watermark-logo{
+  width:28px;height:28px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 6px rgba(201,168,76,.4));
+}
+.watermark-text{
+  font-family:var(--ff-title);
+  font-size:.65rem;letter-spacing:.2em;
+  color:var(--gold);
+  text-transform:uppercase;
+}
+
+/* ════════════════════
+   FOOTER
+════════════════════ */
+footer{
+  position:relative;z-index:1;
+  padding:3rem 1.5rem;
+  text-align:center;
+  border-top:1px solid rgba(201,168,76,.1);
+}
+.footer-logo{
+  font-family:var(--ff-title);
+  font-size:1.5rem;letter-spacing:.3em;
+  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  display:block;margin-bottom:.4rem;
+}
+.footer-sub{
+  font-size:.7rem;letter-spacing:.3em;
+  color:rgba(201,168,76,.4);text-transform:uppercase;
+}
+
+/* ════════════════════
+   SCROLL REVEAL
+════════════════════ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s ease}
+.reveal.on{opacity:1;transform:none}
+.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}
+
+/* ════════════════════
+   RESPONSIVE
+════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+@media(max-width:600px){
+  #hero{padding:5rem 1.2rem 4rem}
+  .features-grid{grid-template-columns:1fr}
+  .tiktok-btn{padding:.85rem 1.8rem}
+  .watermark{bottom:.8rem;right:.8rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Stars canvas -->
+<canvas id="starCanvas"></canvas>
+
+<!-- ══ WATERMARK ══ -->
+<a href="https://www.tiktok.com/@YOUR_TIKTOK_HERE" target="_blank" rel="noopener" class="watermark" title="Follow us on TikTok">
+  <img src="/mnt/user-data/uploads/1773079016439.png" alt="Vowly" class="watermark-logo"/>
+  <span class="watermark-text">Vowly</span>
+</a>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+
+  <div class="logo-wrap">
+    <img
+      src="/mnt/user-data/uploads/1773079016439.png"
+      alt="Vowly Logo"
+      class="logo-img"
+    />
+  </div>
+
+  <h1 class="brand-name">VOWLY</h1>
+  <p class="brand-sub">Digital Wedding Invitations</p>
+
+  <div class="gold-divider">
+    <span class="divider-gem">◆</span>
+  </div>
+
+  <p class="tagline">
+    Elegant digital invitations that tell your love story — beautifully crafted, forever remembered.
+  </p>
+
+  <!-- ══ TIKTOK BUTTON ══ -->
+  <!-- Replace YOUR_TIKTOK_HERE with your real TikTok username -->
+  <a
+    href="https://www.tiktok.com/@YOUR_TIKTOK_HERE"
+    target="_blank"
+    rel="noopener"
+    class="tiktok-btn"
+  >
+    <svg class="tt-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+    </svg>
+    Follow us on TikTok
+  </a>
+
+  <div class="scroll-hint">
+    <span>Discover</span>
+    <div class="scroll-arr"></div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section id="features">
+  <div class="features-inner">
+    <span class="sec-eyebrow reveal">What we offer</span>
+    <h2 class="sec-title reveal rd1">Your wedding, digitally perfect</h2>
+    <div class="sec-divider reveal rd2"></div>
+
+    <div class="features-grid">
+      <div class="feat-card reveal rd1">
+        <span class="feat-icon">💌</span>
+        <h3 class="feat-title">Digital Invitations</h3>
+        <p class="feat-desc">Beautiful, interactive wedding invitations your guests will never forget — sent instantly, anywhere in the world.</p>
+      </div>
+      <div class="feat-card reveal rd2">
+        <span class="feat-icon">🎨</span>
+        <h3 class="feat-title">Custom Design</h3>
+        <p class="feat-desc">Every invitation is crafted to match your love story — colors, fonts, photos, and personality, all yours.</p>
+      </div>
+      <div class="feat-card reveal rd3">
+        <span class="feat-icon">💍</span>
+        <h3 class="feat-title">Love Websites</h3>
+        <p class="feat-desc">Full wedding websites with countdowns, RSVP, guestbooks, photo galleries and everything in between.</p>
+      </div>
+      <div class="feat-card reveal rd1">
+        <span class="feat-icon">📱</span>
+        <h3 class="feat-title">Mobile Ready</h3>
+        <p class="feat-desc">Perfectly responsive on every device — phone, tablet or desktop. Guests open and enjoy with one tap.</p>
+      </div>
+      <div class="feat-card reveal rd2">
+        <span class="feat-icon">✨</span>
+        <h3 class="feat-title">Interactive Magic</h3>
+        <p class="feat-desc">Animations, countdowns, music, photo walls and love notes — experiences that feel truly special.</p>
+      </div>
+      <div class="feat-card reveal rd3">
+        <span class="feat-icon">🌍</span>
+        <h3 class="feat-title">Share Anywhere</h3>
+        <p class="feat-desc">Share via WhatsApp, Instagram, or a unique link. No printing, no limits, no waste — just elegance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span class="footer-logo">VOWLY</span>
+  <p class="footer-sub">Digital Wedding Invitations · Made with love</p>
+</footer>
+
+<script>
+(function(){
+
+/* ── Starfield canvas ── */
+(function(){
+  var cv  = document.getElementById('starCanvas');
+  var ctx = cv.getContext('2d');
+  var stars = [];
+
+  function resize(){
+    cv.width  = window.innerWidth;
+    cv.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+
+  for(var i = 0; i < 120; i++){
+    stars.push({
+      x:    Math.random() * window.innerWidth,
+      y:    Math.random() * window.innerHeight,
+      r:    0.3 + Math.random() * 1.2,
+      op:   0.1 + Math.random() * 0.7,
+      speed:0.0002 + Math.random() * 0.0006,
+      phase:Math.random() * Math.PI * 2,
+      gold: Math.random() > 0.7   // 30% gold stars
+    });
+  }
+
+  function draw(t){
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    stars.forEach(function(s){
+      var twinkle = s.op * (0.5 + 0.5 * Math.sin(t * s.speed * 1000 + s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.gold
+        ? 'rgba(201,168,76,' + twinkle + ')'
+        : 'rgba(248,244,238,' + twinkle + ')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ── Scroll reveal ── */
+var obs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add('on'); obs.unobserve(e.target); }
+  });
+}, {threshold: 0.12});
+
+document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+
+/* ── Scroll hint hides on scroll ── */
+var hint = document.querySelector('.scroll-hint');
+window.addEventListener('scroll', function(){
+  if(hint) hint.style.opacity = window.scrollY > 60 ? '0' : '1';
+}, {passive:true});
+
+})();
+</script>
+</body>
+</html>
